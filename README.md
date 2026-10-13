@@ -1,5 +1,7 @@
 # Task Notes API
 
+[![CI](https://github.com/Pvrochaa/task-notes-api/actions/workflows/ci.yml/badge.svg)](https://github.com/Pvrochaa/task-notes-api/actions/workflows/ci.yml)
+
 A production-style REST API for managing personal tasks, built to demonstrate backend fundamentals with Spring Boot: JWT authentication, layered architecture, validation, global error handling, pagination, automated tests (unit + integration with Testcontainers), API documentation, and containerization.
 
 ## Why this project
@@ -84,6 +86,8 @@ curl -X POST localhost:8080/api/tasks \
 - `TaskServiceTest` — unit tests for business logic (Mockito, no Spring context)
 - `TaskControllerTest` — web-layer tests (`@WebMvcTest`, mocked service, validates status codes, auth, validation errors)
 - `TaskFlowIntegrationTest` — full end-to-end flow (register → login → create task → access control) against a real PostgreSQL instance via **Testcontainers**, requires Docker running
+
+> **Known Windows limitation:** on some Docker Desktop versions, the Windows named pipe transport that Testcontainers' bundled Docker client uses returns malformed responses, causing `TaskFlowIntegrationTest` and the default `TaskNotesApiApplicationTests` to fail locally even with Docker running. This is an environment/tooling issue, not an application bug — these tests run cleanly on Linux/macOS and in CI (GitHub Actions runners use native Docker). The unit (`TaskServiceTest`) and web-slice (`TaskControllerTest`) tests are unaffected and always run locally.
 
 ## Design notes worth asking about in an interview
 
